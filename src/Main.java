@@ -1,8 +1,6 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
-import javax.swing.JTable;
+import java.awt.event.*;
 import javax.swing.JFrame;
 
 public class Main {
@@ -10,74 +8,108 @@ public class Main {
         //Ventana
         JFrame ventana = new JFrame();
         ventana.setBounds(120, 70, 1600, 900);
-        ventana.setTitle("Probando la librería Swing en Java");
+        ventana.setTitle("Probando la librería Swing en Java II");
         ventana.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        GridLayout grid = new GridLayout(3, 3);
+        FlowLayout flow = new FlowLayout(FlowLayout.CENTER, 30, 40);
+        grid.setHgap(20);
+        grid.setVgap(20);
+        ventana.setLayout(grid);
 
         //Menú superior
         JMenuBar menuBar = new JMenuBar();
         //Se crean las distintas pestañas
-        JMenu tab1 = new JMenu("Archivo");
-        JMenu tab2 = new JMenu("Acciones");
-        JMenu tab3 = new JMenu("Ayuda");
-
-
+        JMenu archivo = new JMenu("Archivo");
+        JMenu acciones = new JMenu("Acciones");
+        JMenu ayuda = new JMenu("Ayuda");
+        //Se crean las opciones (item) que luego aparecerán como un desplegable en cada pestaña
+        JMenuItem version = new JMenuItem("Versión");
+        JMenuItem about = new JMenuItem("Acerca de");
+        //Se añaden los items a cada pestaña
+        ayuda.add(version);
+        ayuda.add(about);
         //Se añaden al menú las pestañas
-        menuBar.add(tab1);
-        menuBar.add(tab2);
-        menuBar.add(tab3);
+        menuBar.add(archivo);
+        menuBar.add(acciones);
+        menuBar.add(ayuda);
         ventana.setJMenuBar(menuBar); //Se establece menuBar como el menu de la ventana
+        version.addActionListener(e -> JOptionPane.showMessageDialog(ventana, "2.45.03", "Versión", JOptionPane.INFORMATION_MESSAGE));  //expresión lambda que sustituye el new Action listener y las llaves
+        about.addActionListener(e -> JOptionPane.showMessageDialog(ventana,"Este programa es un simulador de ligas deportivas que permite crear y gestionar equipos, jugar jornadas y obtener resultados estadísticos.", "Acerca de", JOptionPane.INFORMATION_MESSAGE));
+        //Creación de varios botones y de sus paneles
+        JPanel panelBotonesMenu = new JPanel(flow);
+        Button botonNLiga = new Button("Nueva liga");
+        Button botonJugar = new Button("Jugar liga");
+        Button botonJornada = new Button("Siguiente jornada");
+        Button botonSalir = new Button("SALIR");
+        panelBotonesMenu.add(botonNLiga);
+        panelBotonesMenu.add(botonJugar);
+        panelBotonesMenu.add(botonJornada);
+        panelBotonesMenu.add(botonSalir);
+        ventana.add(panelBotonesMenu);
+        Button boton1;
+        JPanel panelBotonesBucle = new JPanel(grid);
+        for (int i = 1; i < 12; i++) {
+            boton1 = new Button("Botón" + i);
+            panelBotonesBucle.add(boton1);
+        }
+        //Se añade un listener al botón de salir para que se cierre el programa
+        botonSalir.addActionListener(e -> System.exit(0));
+        botonNLiga.addActionListener(e -> System.out.println("Creando nueva liga..."));
+        botonJugar.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-        //Creacion, redimensión y ubicación de los botones
-        JButton botonLiga = new JButton("Nueva liga");
-        botonLiga.setBounds(60, 40, 350, 80);
-        JButton botonJugar = new JButton("Jugar liga");
-        botonJugar.setBounds(60, 170, 350, 80);
-        JButton botonJornada = new JButton("Siguiente jornada");
-        botonJornada.setBounds(60, 300, 350, 80);
-        botonJornada.setEnabled(false);
-        JButton botonSim = new JButton("Simulacion completa");
-        botonSim.setBounds(60, 430, 350, 80);
-        botonSim.setEnabled(false);
-        JButton botonSalir = new JButton("Salir");
-        botonSalir.setBounds(60, 650, 350, 80);
+            }
 
-        //Añade los botones al panel
-        ventana.add(botonLiga);
-        ventana.add(botonJugar);
-        ventana.add(botonJornada);
-        ventana.add(botonSim);
-        ventana.add(botonSalir);
+            @Override
+            public void mousePressed(MouseEvent e) {
 
-        // Establecer el layout de la ventana
-        ventana.setLayout(new BorderLayout());
+            }
 
+            @Override
+            public void mouseReleased(MouseEvent e) {
 
-        //Creación de la tabla
+            }
 
-        //Creación de array para los nombres de las columnas
-        String[] nombresColumnas = {
-                "Nombre equipo",
-                "Partidos",
-                "Victorias",
-                "Derrotas",
-                "Empates",
-                "Puntos"
-        };
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                System.out.println("Haz click para simular una liga completa.");
+            }
 
+            @Override
+            public void mouseExited(MouseEvent e) {
 
-        //Creación de la tabla
-        JTable tabla = new JTable();
-        //Creacion del encabezado de la tabla
-        JTableHeader header = tabla.getTableHeader();
-        header.setBounds(600, 120, 800, 30);
-        tabla.setTableHeader(header);
-        DefaultTableModel modeloTabla= new DefaultTableModel(nombresColumnas,22);
-        tabla.setModel(modeloTabla);
-        tabla.setBounds(600, 150, 800, 350);
-        ventana.add(tabla.getTableHeader());
-        ventana.add(tabla);
+            }
+        });
 
-        ventana.setLayout(null); //importante para la correcta visualización del encabezado de la tabla
+        botonJornada.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(ventana, "Simulando jornada...", "Proceso en curso", JOptionPane.INFORMATION_MESSAGE); //el primer parámetro hace referencia a la ventana padre
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        ventana.add(panelBotonesBucle);
         ventana.setVisible(true);
         ventana.setResizable(false); //se deshabilita la redimensión de la ventana
 
