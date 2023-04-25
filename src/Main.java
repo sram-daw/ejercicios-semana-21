@@ -55,57 +55,17 @@ public class Main {
         //Se añade un listener al botón de salir para que se cierre el programa
         botonSalir.addActionListener(e -> System.exit(0));
         botonNLiga.addActionListener(e -> System.out.println("Creando nueva liga..."));
-        botonJugar.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
+        botonJugar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 System.out.println("Haz click para simular una liga completa.");
             }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
         });
 
-        botonJornada.addMouseListener(new MouseListener() {
+        botonJornada.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(ventana, "Simulando jornada...", "Proceso en curso", JOptionPane.INFORMATION_MESSAGE); //el primer parámetro hace referencia a la ventana padre
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
             }
         });
 
